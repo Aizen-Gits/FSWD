@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signifiya Registration Display</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f0f2f5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .hero {
+      background: linear-gradient(to right, #667eea, #764ba2);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .table-section {
+      margin-top: 3rem;
+      padding: 2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    th, td {
+      text-align: center;
+      vertical-align: middle;
+    }
+    form {
+      display: inline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Signifiya Registered Students</h1>
+</div>
+
+<div class="container">
+  <div class="table-section">
+    <h3 class="text-center mb-4">Registered Students</h3>
+    <table class="table table-bordered">
+      <thead class="table-secondary">
+        <tr>
+          <th>Name</th>
+          <th>Roll Number</th>
+          <th>Registration Number</th>
+          <th>Email</th>
+          <th>Event</th>
+          <th>Update</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data}}
+        <tr>
+          <form method="post" action="/update">
+            <input type="hidden" name="id" value="{{this._id}}">
+            <td><input type="text" class="form-control" name="name" value="{{this.name}}"></td>
+            <td><input type="text" class="form-control" name="roll" value="{{this.roll}}"></td>
+            <td><input type="text" class="form-control" name="reg" value="{{this.reg}}"></td>
+            <td><input type="email" class="form-control" name="email" value="{{this.email}}"></td>
+            <td>
+              <select class="form-select" name="event">
+                <option value="Tug of War" {{#ifCond this.event "Tug of War"}}selected{{/ifCond}}>Tug of War</option>
+                <option value="Battlegrounds Mobile India" {{#ifCond this.event "Battlegrounds Mobile India"}}selected{{/ifCond}}>Battlegrounds Mobile India</option>
+                <option value="Coding Premier League" {{#ifCond this.event "Coding Premier League"}}selected{{/ifCond}}>Coding Premier League</option>
+                <option value="Olympiad" {{#ifCond this.event "Olympiad"}}selected{{/ifCond}}>Olympiad</option>
+                <option value="3D Modelling & Printing" {{#ifCond this.event "3D Modelling & Printing"}}selected{{/ifCond}}>3D Modelling & Printing</option>
+                <option value="Mechanical Challenges" {{#ifCond this.event "Mechanical Challenges"}}selected{{/ifCond}}>Mechanical Challenges</option>
+                <option value="Gaming Battles" {{#ifCond this.event "Gaming Battles"}}selected{{/ifCond}}>Gaming Battles</option>
+                <option value="Tech Talks & Competitions" {{#ifCond this.event "Tech Talks & Competitions"}}selected{{/ifCond}}>Tech Talks & Competitions</option>
+              </select>
+            </td>
+            <td><input type="submit" class="btn btn-success" value="UPDATE" name="btn"></td>
+          </form>
+          <td>
+            <form method="post" action="/update">
+              <input type="hidden" name="id" value="{{this._id}}">
+              <input type="submit" class="btn btn-danger" value="DELETE" name="btn">
+            </form>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{{#if status}}
+<script>
+  const status = {{status}};
+  if (status == 1) {
+    alert("✅ Data Updated Successfully!");
+  }
+  if (status == 2) {
+    alert("🗑️ Data Deleted Successfully!");
+  }
+  if (status == 3) {
+    alert("🎉 Student Registered Successfully!");
+  }
+</script>
+{{/if}}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
